@@ -20,7 +20,9 @@ public static void main(String[] args){
 		
 		Config.load();
 		
-		LanguageDetector.init(Config.getLanguageDetectorProfileDir());
+		if( Config.enableLanguageDetection() ){
+			LanguageDetector.init(Config.getLanguageDetectorProfileDir());
+		}
 		Node.start();
 		
 		

@@ -31,6 +31,8 @@ public class Config {
 	private final static  String KEY_LANGUAGE="language";
 	private final static  String KEY_LANGUAGE_CERTAINTY="language_certainity";
 	private final static  String KEY_STRIP_UNICODE="strip_unicode";
+	private final static  String KEY_EMPTY_ARTICLE_RETRY_LIMIT="empty_article_retry_limit";
+	private static final String KEY_ENABLE_LANGUAGE_DETECTION = "enable_language_detection";
 
 	public static String getNodeName() {
 		return _configuration.getString(KEY_SNAME,"boilerpipe");
@@ -50,6 +52,9 @@ public class Config {
 		return _configuration.getString(KEY_PROCESSING_SERVER_NAME,"boilerpipe");
 	}
 
+	public static boolean enableLanguageDetection(){
+		return _configuration.getBoolean(KEY_ENABLE_LANGUAGE_DETECTION,true);
+	}
 	public static String getLanguageDetectorProfileDir() {
 		
 		return _configuration.getString(KEY_LANGUAGE_PROFILE_DIR,".");
@@ -74,6 +79,10 @@ public class Config {
 	public static boolean stripUnicode() {
 		
 		return _configuration.getBoolean(KEY_STRIP_UNICODE,false);
+	}
+
+	public static int getEmptyParseRetryLimit() {
+		return _configuration.getInt(KEY_EMPTY_ARTICLE_RETRY_LIMIT,10);
 	}
 	
 	

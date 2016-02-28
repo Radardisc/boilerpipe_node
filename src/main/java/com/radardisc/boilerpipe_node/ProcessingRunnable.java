@@ -30,8 +30,8 @@ public class ProcessingRunnable implements Runnable {
 	public void run() {
 		
 		OtpMbox box = getMbox();
-		
-		readAndReply(_file,_replyTo,box);
+		Log.info("Parse requested %s", _file);
+		readAndReply(_file,_replyTo,box,Config.getEmptyParseRetryLimit());
 			
 		
 		
@@ -52,7 +52,7 @@ public class ProcessingRunnable implements Runnable {
 		}
 	}
 
-	public static void readAndReply(String file, OtpErlangPid replyTo, OtpMbox mbox )  {
+	public static void readAndReply(String file, OtpErlangPid replyTo, OtpMbox mbox, int retries )  {
 
 		try {
 			
@@ -63,6 +63,12 @@ public class ProcessingRunnable implements Runnable {
 			OtpErlangAtom ok = new OtpErlangAtom("ok");
 			OtpErlangString eString = new OtpErlangString(result);
 			
+			if( result.length() < 10 ){
+				if( retries > 0 ){
+					readAndReply( file, replyTo,mbox,retries-1);
+					return;
+				}
+			}
 			OtpErlangTuple response = new OtpErlangTuple(new OtpErlangObject[]{ ok, eString});
 			mbox.send(replyTo, response);
 		
