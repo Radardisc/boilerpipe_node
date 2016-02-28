@@ -38,7 +38,7 @@ CLASS="com.radardisc.boilerpipe_node.JSvc"
 ARGS=""
 
 #The user to run the daemon as
-USER="ror"
+USER="root"
 
 # The file that will contain our process identification number (pid) for other scripts/programs that need to access it.
 if [ "$USER" = "root" ] ; then
